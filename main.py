@@ -2,7 +2,10 @@ import gym
 import numpy as np
 import datetime
 
-def heuristic(env, s):
+import torch
+import network
+
+def heuristic(s):
     """
     The heuristic for
     1. Testing
@@ -34,17 +37,15 @@ def heuristic(env, s):
         angle_todo = 0
         hover_todo = -(s[3])*0.5  # override to reduce fall speed, that's all we need after contact
 
-    if env.continuous:
-        a = np.array([hover_todo*20 - 1, -angle_todo*20])
-        a = np.clip(a, -1, +1)
-    else:
-        a = 0
-        if hover_todo > np.abs(angle_todo) and hover_todo > 0.05: a = 2
-        elif angle_todo < -0.05: a = 3
-        elif angle_todo > +0.05: a = 1
+    a = 0
+    if hover_todo > np.abs(angle_todo) and hover_todo > 0.05: a = 2
+    elif angle_todo < -0.05: a = 3
+    elif angle_todo > +0.05: a = 1
+
     return a
 
 def main():
+    net = network.Network()
     env = gym.make("LunarLander-v2")
     while True:
         env.seed(int(datetime.datetime.now().timestamp()))
@@ -52,7 +53,7 @@ def main():
         steps = 0
         s = env.reset()
         while True:
-            a = heuristic(env, s)
+            a = net(torch.from_numpy(s)).argmax().detach().numpy()
             s, r, done, info = env.step(a)
             total_reward += r
 
