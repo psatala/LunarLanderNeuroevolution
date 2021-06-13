@@ -1,3 +1,22 @@
+import config
+
 IN_FEATURES = 8
 OUT_FEATURES = 4
-N_HIDDEN = 16
+
+# problem size is count of all network parameters (2 layers with bias)
+PROBLEM_SIZE = (IN_FEATURES * config.N_HIDDEN + config.N_HIDDEN + 
+    config.N_HIDDEN * OUT_FEATURES + OUT_FEATURES)
+
+# selection
+SELECTION_ROULETTE = 1
+SELECTION_TOURNAMENT = 2
+# crossover
+CROSSOVER_SINGLE_POINT = 1
+CROSSOVER_UNIFORM = 2
+CROSSOVER_ARITHMETIC = 3
+CROSSOVER_NONE = 4
+# mutation
+MUTATION_RANDOM = 1
+# succession
+SUCCESSION_GENERATIONAL = 1
+SUCCESSION_ELITE = 2

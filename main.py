@@ -1,41 +1,59 @@
-import gym
-import datetime
+#!/usr/bin/env python3
 
-import torch
-import network
-import heuristic
+from numpy import average
+from operations import *
+import copy
+
 
 def main():
-    net = network.Network()
-    env = gym.make("LunarLander-v2")
-    flat_params = net.get_params()
 
-    # check parsing parameters
-    net2 = network.Network()
-    net2.set_params(flat_param_array=flat_params)
-    print("Equality of both networks: " + str(net == net2))
+    # Use current Unix time as seed
+    seed = SEED
+    np.random.seed(seed)
 
-    while True:
-        env.seed(int(datetime.datetime.now().timestamp()))
-        total_reward = 0
-        steps = 0
-        s = env.reset()
-        while True:
-            a = net(torch.from_numpy(s)).argmax().detach().numpy()
-            s, r, done, info = env.step(a)
-            total_reward += r
+    minReward = []
+    avgReward = []
+    maxReward = []
 
-            # rest of this loop has been copied from tutorial
-            still_open = env.render()
-            if still_open == False: break
+    for n in range(N_RUNS):
+        print('Run '+str(n))
+                
+        #initialize population
+        stablePopulation = Population()
 
-            if steps % 20 == 0 or done:
-                print("observations:", " ".join(["{:+0.2f}".format(x) for x in s]))
-                print("step {} total_reward {:+0.2f}".format(steps, total_reward))
-            steps += 1
-            if done: break
+        mins = []
+        avgs = []
+        maxs = []
+
+        #main loop
+        for i in range(N_EPOCHS):
+            if i % 100 == 0:
+                print("Epoch "+str(i)+"/"+str(N_EPOCHS))
+            tempPopulation = copy.deepcopy(stablePopulation)
+            tempPopulation = selection(tempPopulation, SELECTION_METHOD)
+            tempPopulation = crossover(tempPopulation, CROSSOVER_METHOD)
+            tempPopulation = mutation(tempPopulation, MUTATION_METHOD)
+            tempPopulation.calculateReward()
+            stablePopulation = succession(stablePopulation, tempPopulation, 
+                SUCCESSION_METHOD)
+            scores = []
+            for x in stablePopulation.individuals:
+                scores.append(x.reward)
+            mins.append(min(scores))
+            avgs.append(round(sum(scores)/len(scores)))
+            maxs.append(max(scores))
+
+        
+        minReward.append(mins)
+        avgReward.append(avgs)
+        maxReward.append(maxs)
+
+        print(minReward)
+        print(avgReward)
+        print(maxReward)
+    
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+

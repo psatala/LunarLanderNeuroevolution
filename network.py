@@ -2,12 +2,15 @@ import torch
 import constants
 
 class Network(torch.nn.Module):
-    def __init__(self) -> None:
+    def __init__(self, flat_param_array=None) -> None:
         super(Network, self).__init__()
         self.linear1 = torch.nn.Linear(constants.IN_FEATURES, 
             constants.N_HIDDEN)
         self.linear2 = torch.nn.Linear(constants.N_HIDDEN, 
             constants.OUT_FEATURES)
+
+        if flat_param_array is not None:
+            self.set_params(flat_param_array=flat_param_array)
 
     def forward(self, x):
         h_relu = self.linear1(x).clamp(min=0)

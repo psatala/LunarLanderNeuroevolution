@@ -1,0 +1,23 @@
+import constants
+
+# seed
+SEED = 123
+
+# network
+N_HIDDEN = 16
+
+# general
+N_RUNS = 1
+N_EPOCHS = 400
+
+# evolutionary algorithm
+POPULATION_SIZE = 300
+CROSSOVER_PROBABILITY = 1.0
+MUTATION_PROBABILITY = 0.01
+ELITE_SIZE = 240
+
+# chosen methods
+SELECTION_METHOD = constants.SELECTION_TOURNAMENT
+CROSSOVER_METHOD = constants.CROSSOVER_NONE
+MUTATION_METHOD = constants.MUTATION_RANDOM
+SUCCESSION_METHOD = constants.SUCCESSION_ELITE
