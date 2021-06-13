@@ -14,10 +14,6 @@ def selectionRoulette(stablePopulation):
     minReward = min(rewardVals)
     rewardVals -= minReward # get rid of negative rewards
     sumReward = sum(rewardVals)
-    # for i in range(len(rewardVals)):
-    #     # another way to do roulette selection
-    #     #rewardVals[i] = 1 / rewardVals[i] 
-    #     rewardVals[i] = maxReward - rewardVals[i] + minReward
 
     #calculate probabilities
     probabilities = np.zeros(len(stablePopulation.individuals))

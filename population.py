@@ -3,29 +3,16 @@ from network import Network
 from individual import *
 import config
 
-
-# def printPop(pop):
-#     for x in pop.individuals:
-#         print(x.chromosome, end=' ')
-#         print(x.fitness, end='\t')
-#     print()
-
-# def bestFitness(pop):
-#     bestFit = 1e9
-#     for x in pop.individuals:
-#         if x.fitness < bestFit:
-#             bestFit = x.fitness
-#     print(bestFit)
-
-
 class Population:
     def __init__(self, populationSize = POPULATION_SIZE):
         self.individuals = [Individual() for _ in range(populationSize)]
 
     def calculateReward(self):
-        seed = np.random.randint(config.MAX_ENV_SEED)
+        seeds = []
+        for _ in range(N_EVALS):
+            seeds.append(np.random.randint(config.MAX_ENV_SEED))
         for individual in self.individuals:
-            individual.calculateReward(seed=seed)
+            individual.calculateReward(seeds=seeds)
 
     def save_best(self):
         net = Network(self.individuals[0].chromosome)

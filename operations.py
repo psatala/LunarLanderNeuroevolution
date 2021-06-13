@@ -43,9 +43,6 @@ def crossover(tempPopulation, crossoverMethod):
 
 
 def mutation(tempPopulation, mutationMethod):
-    # if mutationMethod == MUTATION_GAUSS:
-    #     return mutationGauss(tempPopulation)
-    # else:
     return mutationRandom(tempPopulation)
 
 

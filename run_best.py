@@ -9,6 +9,7 @@ def main():
     net = network.Network()
     net.load_state_dict(torch.load(config.PATH))
     env = gym.make("LunarLander-v2")
+    games = 0
 
     while True:
         env.seed(round(time.time()))
@@ -25,11 +26,12 @@ def main():
                 return
 
             if done:
-                print("step {} total_reward {:+0.2f}".format(steps, 
-                    total_reward))
+                print("game {} step {} total_reward {:+0.2f}".format(games, 
+                    steps, total_reward))
                 break
 
             steps += 1
+        games += 1
 
 
 if __name__ == '__main__':

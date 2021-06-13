@@ -15,8 +15,11 @@ class Individual:
         return self.reward < other.reward
 
 
-    def calculateReward(self, seed):
-        self.reward = eval.eval(self.chromosome, seed)
+    def calculateReward(self, seeds):
+        self.reward = 0
+        for seed in seeds:
+            self.reward += eval.eval(self.chromosome, seed)
+        self.reward /= len(seeds)
         return self.reward
 
     def reinitialize_element(self, index):
