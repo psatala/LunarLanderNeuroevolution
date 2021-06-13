@@ -1,5 +1,5 @@
 from individual import *
-
+import config
 
 
 # def printPop(pop):
@@ -21,6 +21,6 @@ class Population:
         self.individuals = [Individual() for _ in range(populationSize)]
 
     def calculateReward(self):
-        seed = 0
+        seed = np.random.randint(config.MAX_ENV_SEED)
         for individual in self.individuals:
             individual.calculateReward(seed=seed)

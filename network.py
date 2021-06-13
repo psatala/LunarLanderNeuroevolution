@@ -1,12 +1,13 @@
 import torch
 import constants
+import config
 
 class Network(torch.nn.Module):
     def __init__(self, flat_param_array=None) -> None:
         super(Network, self).__init__()
         self.linear1 = torch.nn.Linear(constants.IN_FEATURES, 
-            constants.N_HIDDEN)
-        self.linear2 = torch.nn.Linear(constants.N_HIDDEN, 
+            config.N_HIDDEN)
+        self.linear2 = torch.nn.Linear(config.N_HIDDEN, 
             constants.OUT_FEATURES)
 
         if flat_param_array is not None:
@@ -32,20 +33,20 @@ class Network(torch.nn.Module):
         state_dict = self.state_dict()
         
         state_dict["linear1.weight"] = torch.from_numpy(flat_param_array[
-            : constants.IN_FEATURES * constants.N_HIDDEN]).reshape(
-            constants.N_HIDDEN, constants.IN_FEATURES) 
+            : constants.IN_FEATURES * config.N_HIDDEN]).reshape(
+            config.N_HIDDEN, constants.IN_FEATURES) 
         flat_param_array = flat_param_array[
-            constants.IN_FEATURES * constants.N_HIDDEN :]
+            constants.IN_FEATURES * config.N_HIDDEN :]
         
         state_dict["linear1.bias"] = torch.from_numpy(flat_param_array[
-            : constants.N_HIDDEN])
-        flat_param_array = flat_param_array[constants.N_HIDDEN :]
+            : config.N_HIDDEN])
+        flat_param_array = flat_param_array[config.N_HIDDEN :]
 
         state_dict["linear2.weight"] = torch.from_numpy(flat_param_array[
-            : constants.N_HIDDEN * constants.OUT_FEATURES]).reshape(
-            constants.OUT_FEATURES, constants.N_HIDDEN) 
+            : config.N_HIDDEN * constants.OUT_FEATURES]).reshape(
+            constants.OUT_FEATURES, config.N_HIDDEN) 
         flat_param_array = flat_param_array[
-            constants.N_HIDDEN * constants.OUT_FEATURES :]
+            config.N_HIDDEN * constants.OUT_FEATURES :]
         
         state_dict["linear2.bias"] = torch.from_numpy(flat_param_array[
             : constants.OUT_FEATURES])

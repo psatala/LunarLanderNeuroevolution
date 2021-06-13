@@ -1,11 +1,6 @@
-import config
-
+# network
 IN_FEATURES = 8
 OUT_FEATURES = 4
-
-# problem size is count of all network parameters (2 layers with bias)
-PROBLEM_SIZE = (IN_FEATURES * config.N_HIDDEN + config.N_HIDDEN + 
-    config.N_HIDDEN * OUT_FEATURES + OUT_FEATURES)
 
 # selection
 SELECTION_ROULETTE = 1

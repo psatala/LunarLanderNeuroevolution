@@ -43,14 +43,17 @@ def main():
             avgs.append(round(sum(scores)/len(scores)))
             maxs.append(max(scores))
 
+            print("Epoch: " + str(i))
+            print("Min: " + str(mins[-1]))
+            print("Avg: " + str(avgs[-1]))
+            print("Max: " + str(maxs[-1]))
+            print()
+
         
         minReward.append(mins)
         avgReward.append(avgs)
         maxReward.append(maxs)
 
-        print(minReward)
-        print(avgReward)
-        print(maxReward)
     
 
 

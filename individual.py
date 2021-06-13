@@ -1,7 +1,7 @@
 import numpy as np
 from constants import *
 from config import *
-
+import eval
 
 
 class Individual:
@@ -16,7 +16,7 @@ class Individual:
 
 
     def calculateReward(self, seed):
-        self.reward = eval(self.chromosome, seed)
+        self.reward = eval.eval(self.chromosome, seed)
         return self.reward
 
     def reinitialize_element(self, index):
