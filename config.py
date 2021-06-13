@@ -27,3 +27,5 @@ CROSSOVER_METHOD = constants.CROSSOVER_NONE
 MUTATION_METHOD = constants.MUTATION_RANDOM
 SUCCESSION_METHOD = constants.SUCCESSION_ELITE
 
+# path to best model
+PATH = "best_model.pt"

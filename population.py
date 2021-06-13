@@ -1,3 +1,5 @@
+import torch
+from network import Network
 from individual import *
 import config
 
@@ -24,3 +26,7 @@ class Population:
         seed = np.random.randint(config.MAX_ENV_SEED)
         for individual in self.individuals:
             individual.calculateReward(seed=seed)
+
+    def save_best(self):
+        net = Network(self.individuals[0].chromosome)
+        torch.save(net.state_dict(), PATH)

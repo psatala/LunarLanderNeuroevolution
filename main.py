@@ -36,6 +36,8 @@ def main():
             tempPopulation.calculateReward()
             stablePopulation = succession(stablePopulation, tempPopulation, 
                 SUCCESSION_METHOD)
+            stablePopulation.save_best()
+
             scores = []
             for x in stablePopulation.individuals:
                 scores.append(x.reward)
