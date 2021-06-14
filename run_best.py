@@ -6,13 +6,14 @@ import network
 import config
 
 def main():
-    net = network.Network()
-    net.load_state_dict(torch.load(config.PATH))
-    env = gym.make("LunarLander-v2")
     games = 0
+    env = gym.make("LunarLander-v2")
+    net = network.Network()
 
     while True:
+        net.load_state_dict(torch.load(config.PATH))
         env.seed(round(time.time()))
+        
         total_reward = 0
         steps = 0
         s = env.reset()
