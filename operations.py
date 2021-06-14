@@ -16,29 +16,34 @@ def selection(stablePopulation, selectionMethod):
 def crossover(tempPopulation, crossoverMethod):
     if crossoverMethod == CROSSOVER_NONE:
         return tempPopulation
+    
     newPopulation = Population()
     newPopulation.individuals = []
-    while len(newPopulation.individuals) < POPULATION_SIZE:
+
+    for _ in range(POPULATION_SIZE):
+        # since tempPopulation has already gone through the selection process, 
+        # we can just uniformly sample an individual
         a = tempPopulation.individuals[
-            math.floor(np.random.rand()*len(tempPopulation.individuals))]
-        b = tempPopulation.individuals[
-            math.floor(np.random.rand()*len(tempPopulation.individuals))]
-        newPopulation.individuals.append(a)
-        if len(newPopulation.individuals) < POPULATION_SIZE:
-            newPopulation.individuals.append(b)
-        if (np.random.rand() < CROSSOVER_PROBABILITY and 
-            len(newPopulation.individuals) < POPULATION_SIZE):
+            np.random.randint(len(tempPopulation.individuals))]
+
+        # do the crossover
+        if np.random.rand() < CROSSOVER_PROBABILITY:
+            b = tempPopulation.individuals[
+                np.random.randint(len(tempPopulation.individuals))]
 
             if crossoverMethod == CROSSOVER_SINGLE_POINT:
                 newPopulation.individuals.append(crossoverSinglePoint(a, b))
             elif crossoverMethod == CROSSOVER_UNIFORM:
                 newPopulation.individuals.append(crossoverUniform(a, b))
-            elif crossoverMethod == CROSSOVER_ARITHMETIC:
+            else: # CROSSOVER_ARITHMETIC
                 newPopulation.individuals.append(crossoverArithmetic(a, b))
-            else:
-                return tempPopulation
+
+        # no crossover
+        else:
+            newPopulation.individuals.append(a)
+
     return newPopulation
-    
+
 
 
 
