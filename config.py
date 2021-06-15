@@ -1,4 +1,5 @@
 import constants
+from datetime import datetime
 
 # seed
 SEED = 123
@@ -11,6 +12,7 @@ N_HIDDEN = 16
 N_RUNS = 1
 N_EPOCHS = 400
 N_EVALS = 5
+N_SIM_STEP_LIMIT = 400
 # problem size is count of all network parameters (2 layers with bias)
 # do not change it unless network architecture is changed
 PROBLEM_SIZE = (constants.IN_FEATURES * N_HIDDEN + N_HIDDEN + 
@@ -18,7 +20,7 @@ PROBLEM_SIZE = (constants.IN_FEATURES * N_HIDDEN + N_HIDDEN +
 
 # evolutionary algorithm
 POPULATION_SIZE = 100
-CROSSOVER_PROBABILITY = 0.75
+CROSSOVER_PROBABILITY = 1
 MUTATION_PROBABILITY = 0.01
 ELITE_SIZE = 20
 
@@ -29,4 +31,4 @@ MUTATION_METHOD = constants.MUTATION_RANDOM
 SUCCESSION_METHOD = constants.SUCCESSION_ELITE
 
 # path to best model
-PATH = "best_model.pt"
+PATH = "best_model_"+str(datetime.now()).replace(" ", "").replace(".", "").replace(":", "")+".pt"

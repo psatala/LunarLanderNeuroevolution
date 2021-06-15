@@ -3,15 +3,18 @@ import time
 
 import torch
 import network
-import config
+import sys
 
 def main():
     games = 0
     env = gym.make("LunarLander-v2")
     net = network.Network()
+    if len(sys.argv) < 2:
+        print("Specify the model file")
+        exit()
 
     while True:
-        net.load_state_dict(torch.load(config.PATH))
+        net.load_state_dict(torch.load(sys.argv[1]))
         env.seed(round(time.time()))
         
         total_reward = 0

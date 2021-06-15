@@ -38,6 +38,7 @@ def main():
         log_param("Crossover method", CROSSOVER_METHOD)
         log_param("Mutation method", MUTATION_METHOD)
         log_param("Succession method", SUCCESSION_METHOD)
+        log_param("Simulation runs limit", N_SIM_STEP_LIMIT)
                 
         #initialize population
         stablePopulation = Population()
@@ -69,7 +70,7 @@ def main():
             for x in stablePopulation.individuals:
                 scores.append(x.reward)
             mins.append(min(scores))
-            avgs.append(round(sum(scores)/len(scores)))
+            avgs.append(sum(scores)/len(scores))
             maxs.append(max(scores))
 
             print("Epoch: " + str(i))

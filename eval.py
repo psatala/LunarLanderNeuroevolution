@@ -1,3 +1,4 @@
+from config import N_SIM_STEP_LIMIT
 import gym
 import datetime
 import time
@@ -24,6 +25,7 @@ def eval(flat_params=None, seed=None):
 
         steps += 1
         if done: break
+        if steps == N_SIM_STEP_LIMIT: break
 
     return total_reward
 
