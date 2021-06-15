@@ -22,13 +22,14 @@ PROBLEM_SIZE = (constants.IN_FEATURES * N_HIDDEN + N_HIDDEN +
 POPULATION_SIZE = 100
 CROSSOVER_PROBABILITY = 1
 MUTATION_PROBABILITY = 0.01
-ELITE_SIZE = 20
+ELITE_SIZE = 50
 
 # chosen methods
-SELECTION_METHOD = constants.SELECTION_TOURNAMENT
-CROSSOVER_METHOD = constants.CROSSOVER_UNIFORM
-MUTATION_METHOD = constants.MUTATION_RANDOM
-SUCCESSION_METHOD = constants.SUCCESSION_ELITE
+SELECTION_METHOD = constants.SelectionMethod.selection_tournament
+CROSSOVER_METHOD = constants.CrossoverMethod.crossover_uniform
+MUTATION_METHOD = constants.MutationMethod.mutation_random
+SUCCESSION_METHOD = constants.SuccessionMethod.succession_elite
 
 # path to best model
-PATH = "best_model_"+str(datetime.now()).replace(" ", "").replace(".", "").replace(":", "")+".pt"
+PATH = "best_model_"+str(datetime.now()).replace(" ", "").replace(
+    ".", "").replace(":", "")+".pt"

@@ -6,7 +6,7 @@ from succession import *
 
 
 def selection(stablePopulation, selectionMethod):
-    if selectionMethod == SELECTION_ROULETTE:
+    if selectionMethod == SelectionMethod.selection_roulette:
         return selectionRoulette(stablePopulation)
     else:
         return selectionTournament(stablePopulation)
@@ -14,7 +14,7 @@ def selection(stablePopulation, selectionMethod):
 
 
 def crossover(tempPopulation, crossoverMethod):
-    if crossoverMethod == CROSSOVER_NONE:
+    if crossoverMethod == CrossoverMethod.crossover_none:
         return tempPopulation
     
     newPopulation = Population()
@@ -31,11 +31,11 @@ def crossover(tempPopulation, crossoverMethod):
             b = tempPopulation.individuals[
                 np.random.randint(len(tempPopulation.individuals))]
 
-            if crossoverMethod == CROSSOVER_SINGLE_POINT:
+            if crossoverMethod == CrossoverMethod.crossover_single_point:
                 newPopulation.individuals.append(crossoverSinglePoint(a, b))
-            elif crossoverMethod == CROSSOVER_UNIFORM:
+            elif crossoverMethod == CrossoverMethod.crossover_uniform:
                 newPopulation.individuals.append(crossoverUniform(a, b))
-            else: # CROSSOVER_ARITHMETIC
+            else: # CrossoverMethod.crossover_arithmetic
                 newPopulation.individuals.append(crossoverArithmetic(a, b))
 
         # no crossover
@@ -53,7 +53,7 @@ def mutation(tempPopulation, mutationMethod):
 
 
 def succession(stablePopulation, tempPopulation, successionMethod):
-    if successionMethod == SUCCESSION_GENERATIONAL:
+    if successionMethod == SuccessionMethod.succession_generational:
         return successionGenerational(stablePopulation, tempPopulation)
     else:
         return successionElite(stablePopulation, tempPopulation)
