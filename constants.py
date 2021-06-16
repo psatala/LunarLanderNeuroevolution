@@ -1,17 +1,26 @@
+from enum import Enum
+
 # network
 IN_FEATURES = 8
 OUT_FEATURES = 4
 
 # selection
-SELECTION_ROULETTE = 1
-SELECTION_TOURNAMENT = 2
+class SelectionMethod(Enum):
+    selection_roulette = "roulette(1)"
+    selection_tournament = "tournament(2)"
+
 # crossover
-CROSSOVER_SINGLE_POINT = 1
-CROSSOVER_UNIFORM = 2
-CROSSOVER_ARITHMETIC = 3
-CROSSOVER_NONE = 4
+class CrossoverMethod(Enum):
+    crossover_single_point = "single point(1)"
+    crossover_uniform = "uniform(2)"
+    crossover_arithmetic = "arithmetic(3)"
+    crossover_none = "none(4)"
+
 # mutation
-MUTATION_RANDOM = 1
+class MutationMethod(Enum):
+    mutation_random = "random(1)"
+
 # succession
-SUCCESSION_GENERATIONAL = 1
-SUCCESSION_ELITE = 2
+class SuccessionMethod(Enum):
+    succession_generational = "generational(1)"
+    succession_elite = "elite(2)"

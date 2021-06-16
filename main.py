@@ -3,11 +3,9 @@
 from numpy import average
 from operations import *
 import copy
-from mlflow import log_metric, log_param, start_run, end_run, create_experiment
+from mlflow import log_metric, log_param, start_run, end_run
 
 
-# path to best model
-PATH = "best_model.pt"
 
 def main():
 
@@ -19,7 +17,6 @@ def main():
     avgReward = []
     maxReward = []
 
-    # experiment_isd = create_experiment("ALHE experiment")
 
     for n in range(N_RUNS):
         print('Run '+str(n))
