@@ -22,7 +22,7 @@ PROBLEM_SIZE = (constants.IN_FEATURES * N_HIDDEN + N_HIDDEN +
 POPULATION_SIZE = 100
 CROSSOVER_PROBABILITY = 1
 MUTATION_PROBABILITY = 0.01
-ELITE_SIZE = 50
+ELITE_SIZE = 80
 
 # chosen methods
 SELECTION_METHOD = constants.SelectionMethod.selection_tournament
