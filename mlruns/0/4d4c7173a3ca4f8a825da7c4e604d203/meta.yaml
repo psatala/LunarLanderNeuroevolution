@@ -1,0 +1,15 @@
+artifact_uri: file:///home/piotr/LunarLanderNeuroevolution/mlruns/0/4d4c7173a3ca4f8a825da7c4e604d203/artifacts
+end_time: 1623804196866
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 4d4c7173a3ca4f8a825da7c4e604d203
+run_uuid: 4d4c7173a3ca4f8a825da7c4e604d203
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1623754685584
+status: 3
+tags: []
+user_id: Piotrek

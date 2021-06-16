@@ -1,41 +1,94 @@
-import gym
-import datetime
+#!/usr/bin/env python3
 
-import torch
-import network
-import heuristic
+from numpy import average
+from operations import *
+import copy
+from mlflow import log_metric, log_param, start_run, end_run
+
+
 
 def main():
-    net = network.Network()
-    env = gym.make("LunarLander-v2")
-    flat_params = net.get_params()
 
-    # check parsing parameters
-    net2 = network.Network()
-    net2.set_params(flat_param_array=flat_params)
-    print("Equality of both networks: " + str(net == net2))
+    # Use current Unix time as seed
+    seed = SEED
+    np.random.seed(seed)
 
-    while True:
-        env.seed(int(datetime.datetime.now().timestamp()))
-        total_reward = 0
-        steps = 0
-        s = env.reset()
-        while True:
-            a = net(torch.from_numpy(s)).argmax().detach().numpy()
-            s, r, done, info = env.step(a)
-            total_reward += r
-
-            # rest of this loop has been copied from tutorial
-            still_open = env.render()
-            if still_open == False: break
-
-            if steps % 20 == 0 or done:
-                print("observations:", " ".join(["{:+0.2f}".format(x) for x in s]))
-                print("step {} total_reward {:+0.2f}".format(steps, total_reward))
-            steps += 1
-            if done: break
+    minReward = []
+    avgReward = []
+    maxReward = []
 
 
+    for n in range(N_RUNS):
+        print('Run '+str(n))
 
-if __name__ == '__main__':
+        start_run()
+        log_param("Seed", SEED)
+        log_param("N Hidden", N_HIDDEN)
+        log_param("N Runs", N_RUNS)
+        log_param("N Epochs", N_EPOCHS)
+        log_param("N Evals", N_EVALS)
+        log_param("Population size", POPULATION_SIZE)
+        log_param("Crossover probability", CROSSOVER_PROBABILITY)
+        log_param("Mutation probability", MUTATION_PROBABILITY)
+        log_param("Elite size", ELITE_SIZE)
+        log_param("Selection method", SELECTION_METHOD)
+        log_param("Crossover method", CROSSOVER_METHOD)
+        log_param("Mutation method", MUTATION_METHOD)
+        log_param("Succession method", SUCCESSION_METHOD)
+        log_param("Simulation runs limit", N_SIM_STEP_LIMIT)
+                
+        #initialize population
+        stablePopulation = Population()
+
+        mins = []
+        avgs = []
+        maxs = []
+
+        #main loop
+        for i in range(N_EPOCHS):
+            if i % 100 == 0:
+                print("Epoch "+str(i)+"/"+str(N_EPOCHS))
+
+            seeds = []
+            for _ in range(N_EVALS):
+                seeds.append(np.random.randint(config.MAX_ENV_SEED))
+            for individual in range(ELITE_SIZE):
+                stablePopulation.individuals[individual].calculateReward(seeds)
+            tempPopulation = copy.deepcopy(stablePopulation)
+            tempPopulation = selection(tempPopulation, SELECTION_METHOD)
+            tempPopulation = crossover(tempPopulation, CROSSOVER_METHOD)
+            tempPopulation = mutation(tempPopulation, MUTATION_METHOD)
+            tempPopulation.calculateReward(seeds)
+            stablePopulation = succession(stablePopulation, tempPopulation, 
+                SUCCESSION_METHOD)
+            stablePopulation.save_best()
+
+            scores = []
+            for x in stablePopulation.individuals:
+                scores.append(x.reward)
+            mins.append(min(scores))
+            avgs.append(sum(scores)/len(scores))
+            maxs.append(max(scores))
+
+            print("Epoch: " + str(i))
+            print("Min: " + str(mins[-1]))
+            print("Avg: " + str(avgs[-1]))
+            print("Max: " + str(maxs[-1]))
+            print()
+
+            log_metric("Min", mins[-1], step=i)
+            log_metric("Avg", avgs[-1], step=i)
+            log_metric("Max", maxs[-1], step=i)
+
+        minReward.append(mins)
+        avgReward.append(avgs)
+        maxReward.append(maxs)
+
+        end_run()
+
+    
+
+
+if __name__ == "__main__":
     main()
+
