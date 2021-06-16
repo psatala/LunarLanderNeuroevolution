@@ -1,0 +1,18 @@
+This run contains outdated parameter names. Here is the update:
+
+Selection method:
+1 -> roulette
+2 -> tournament
+
+Crossover method:
+1 -> single point
+2 -> uniform
+3 -> arithmetic
+4 -> none
+
+Mutation method:
+1 -> random
+
+Succession method:
+1 -> generational
+2 -> elite
